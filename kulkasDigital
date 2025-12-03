@@ -1,0 +1,242 @@
+#include <iostream>
+using namespace std;
+
+//mendefinisikan struct yang digunakan
+struct Makanan {
+    string namaMakanan;
+    int hargaMakanan;
+    string expMakanan;
+    int idMakanan;
+};
+struct Minuman {
+    string namaMinuman;
+    int hargaMinuman;
+    string expMinuman;
+    int idMinuman;
+};
+
+//database
+Makanan Makanan1[50]; //membatasi makanan menjadi 50 item
+int jmlMakanan = 0;
+Minuman Minuman1[50]; //membatasi minuman menjadi 50 item
+int jmlMinuman = 0;
+int temp;
+
+//fungsi inisialisasi data
+void initData(){
+	Makanan makananBaru;
+	makananBaru.namaMakanan = "pisang";
+	makananBaru.hargaMakanan = 7000;
+	makananBaru.expMakanan = "07-12-2025";
+	makananBaru.idMakanan = 67;
+	Makanan1[0] = makananBaru;
+	jmlMakanan++;
+	
+	Minuman minumanBaru;
+	minumanBaru.namaMinuman = "pocari sweat";
+	minumanBaru.hargaMinuman = 7000;
+	minumanBaru.expMinuman = "07-03-2026";
+	minumanBaru.idMinuman = 41;
+	Minuman1[0] = minumanBaru;
+	jmlMinuman++;
+}
+
+int searchMakanan(Makanan arr[], string key){ //sequential search untuk makanan
+    bool found = false;
+    for(int i = 0; i < 50; i++){
+        if (arr[i].namaMakanan == key){
+        found = true;
+        cout << "==== Makanan ditemukan! ====" << endl;
+        cout << "ID: " << arr[i].idMakanan << endl;
+        cout << "Nama Makanan: " << arr[i].namaMakanan << endl;
+        cout << "Harga Makanan: " << arr[i].hargaMakanan << endl;
+        cout << "Tanggal Kadaluarsa: " << arr[i].expMakanan << endl;
+        break;
+		}
+	}
+	if(!found){
+		cout << "Data tidak ditemukan!" << endl;
+	}
+	return -1;
+}
+
+int searchMinuman(Minuman arr[], string key){ //sequential search untuk minuman
+    bool found = false;
+    for(int i = 0; i < 50; i++){
+        if (arr[i].namaMinuman == key){
+        found = true;
+        cout << "==== Minuman ditemukan! ====" << endl;
+        cout << "ID: " << arr[i].idMinuman << endl;
+        cout << "Nama Minuman: " << arr[i].namaMinuman << endl;
+        cout << "Harga Minuman: " << arr[i].hargaMinuman << endl;
+        cout << "Tanggal Kadaluarsa: " << arr[i].expMinuman << endl;
+        break;
+    	}
+	}
+	if(!found){
+    	cout << "Data tidak ditemukan!" << endl;
+	}
+	return -1;
+}
+
+void tambahMakanan(){ //function untuk menambahkan makanan
+    if (jmlMakanan >= 50) { //memberi notice saat makanan sudah mencapai 50
+        cout << "Jumlah makanan sudah penuh!\n";
+        return;
+    }
+    Makanan makananBaru;
+    cout << "Nama makanan: ";
+    cin.ignore(); //agar mampu menambahkan nama makanan dengan spasi
+    getline(cin, makananBaru.namaMakanan);
+    cout << "Harga: ";
+    cin >> makananBaru.hargaMakanan;
+    cout << "Tanggal Kadaluarsa (dd-mm-yyyy): ";
+    cin.ignore();
+    getline(cin, makananBaru.expMakanan);
+    cout << "ID Makanan: ";
+    cin >> makananBaru.idMakanan;
+
+    Makanan1[jmlMakanan] = makananBaru;
+    jmlMakanan++;
+    cout << "Makanan berhasil ditambahkan!" << endl;
+}
+
+void tambahMinuman(){ //function untuk menambahkan minuman
+    if (jmlMinuman >= 50) { //memberi notice saat minuman sudah mencapai 50
+        cout << "Jumlah minuman sudah penuh!\n";
+        return;
+    }
+    Minuman minumanBaru;
+    cout << "Nama minuman: ";
+    cin.ignore(); //agar mampu menambahkan nama minuman dengan spasi
+    getline(cin, minumanBaru.namaMinuman);
+    cout << "Harga: ";
+    cin >> minumanBaru.hargaMinuman;
+    cout << "Tanggal Kadaluarsa (dd-mm-yyyy): ";
+    cin.ignore();
+    getline(cin, minumanBaru.expMinuman);
+    cout << "ID Minuman: ";
+    cin >> minumanBaru.idMinuman;
+
+    Minuman1[jmlMinuman] = minumanBaru;
+    jmlMinuman++;
+    cout << "Minuman berhasil ditambahkan!" << endl;
+}
+
+void sortMakanan(){ //bubble sort makanan
+    for (int i = 0; i < jmlMakanan - 1; i++){
+       for (int j = 0; j < jmlMakanan - 1; j++){
+           if (Makanan1[j].idMakanan > Makanan1[j+1].idMakanan){
+               temp = Makanan1[j].idMakanan;
+               Makanan1[j].idMakanan = Makanan1[j+1].idMakanan;
+               Makanan1[j+1].idMakanan = temp;
+           }
+       }
+       }
+       cout << "==== Makanan setelah diurutkan berdasarkan ID ====" << endl;
+       for (int i = 0; i<jmlMakanan; i++){
+       cout << i + 1 << ". " << "ID: " << Makanan1[i].idMakanan << "(" << Makanan1[i].namaMakanan << ")" << endl
+            << "   Harga: " << Makanan1[i].hargaMakanan << endl
+            << "   Tanggal Kadaluarsa: " << Makanan1[i].expMakanan << endl;
+       }
+}
+
+void sortMinuman(){ //bubble sort minuman
+    for (int i = 0; i < jmlMinuman - 1; i++){
+       for (int j = 0; j < jmlMinuman - 1; j++){
+           if (Minuman1[j].idMinuman > Minuman1[j+1].idMinuman){
+               temp = Minuman1[j].idMinuman;
+               Minuman1[j].idMinuman = Minuman1[j+1].idMinuman;
+               Minuman1[j+1].idMinuman = temp;
+           }
+       }
+       }
+       cout << "==== Minuman setelah diurutkan berdasarkan ID ====" << endl;
+       for (int i = 0; i<jmlMinuman; i++){
+       cout << i + 1 << ". " << "ID: " << Minuman1[i].idMinuman << "(" << Minuman1[i].namaMinuman << ")" << endl
+            << "   Harga: " << Minuman1[i].hargaMinuman << endl
+            << "   Tanggal Kadaluarsa: " << Minuman1[i].expMinuman << endl;
+       }
+}
+
+void showMakanan(){ //menampilkan daftar makanan secara terurut
+    cout << "==== List Makanan yang sudah disimpan di Kulkas Digital ====" << endl;
+    for (int i=0; i<jmlMakanan; i++){
+        cout << i + 1 << ". " << "ID: " << Makanan1[i].idMakanan << " (" << Makanan1[i].namaMakanan << ")" << endl;
+    }
+}
+
+void showMinuman(){ //menampilkan daftar minuman secara terurut
+    cout << "===+ List Minuman yang sudah disimpan di Kulkas Digital ====" << endl;
+    for (int i=0; i<jmlMinuman; i++){
+        cout << i + 1 << ". " << "ID: " << Minuman1[i].idMinuman << " (" << Minuman1[i].namaMinuman << ")" << endl;
+    }
+}
+
+
+int main() {
+	initData();
+    int pilihan;
+    string B;
+    int pilihan2;
+    do {
+        cout << "============KULKAS DIGITAL=============" << endl;
+        cout << "1. Tambah Makanan" << endl;
+        cout << "2. Tambah Minuman" << endl;
+        cout << "3. List Makanan" << endl;
+        cout << "4. List Minuman" << endl;
+        cout << "5. Cari Makanan atau Minuman" << endl;
+        cout << "6. Keluar" << endl;
+        cout << "Pilih menu: ";
+        cin >> pilihan;
+
+    switch (pilihan) { //user memilih opsi yang disediakan
+        case 1:
+            tambahMakanan ();
+            cout << endl;
+            break;
+        case 2:
+            tambahMinuman();
+            cout << endl;
+            break;
+        case 3:
+            showMakanan();
+            sortMakanan();
+            cout << endl;
+            break;
+        case 4:
+            showMinuman();
+            sortMinuman();
+            cout << endl;
+            break;
+        case 5:
+            do {
+			cout << "Mau cari apa?" << endl;
+            cout << "1. Cari Makanan" << endl;
+            cout << "2. Cari Minuman" << endl;
+            cout << "3. Keluar" << endl;
+            cout << "Masukkan pilihan (masukkan angka): " << endl;
+            cin >> pilihan2;
+                
+            switch (pilihan2){ //user memilih antara mencari makanan atau minuman
+                case 1:
+                	cout << "Masukkan Nama Makanan: ";
+                	cin.ignore(); //agar mampu mengirimkan string dengan lebih dari satu kata
+    				getline(cin, B);
+                	searchMakanan (Makanan1, B);
+                	break; 
+                case 2: 
+                	cout << "Masukkan Nama Minuman: ";
+                	cin.ignore(); //agar mampu mengirimkan string dengan lebih dari satu kata
+    				getline(cin, B);
+                	searchMinuman (Minuman1, B);
+                	break;
+            }
+        	}
+        	while (pilihan2 != 3);
+    }
+    }
+    while (pilihan != 6);
+
+    return 0;
+}
